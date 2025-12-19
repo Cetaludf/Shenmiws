@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>神秘服务器</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            color: #fff;
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 60px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4, #ffeaa7);
+            background-size: 200% 100%;
+            animation: rainbow 3s linear infinite;
+        }
+        
+        @keyframes rainbow {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .title {
+            font-size: 4rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            text-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.5rem;
+            color: #b8b8b8;
+            margin-bottom: 10px;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            color: #ffd93d;
+            margin-top: 20px;
+            font-weight: 500;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #4ecdc4;
+        }
+        
+        .feature-desc {
+            color: #b8b8b8;
+            line-height: 1.6;
+        }
+        
+        .server-info {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            margin-bottom: 40px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .info-section {
+            margin-bottom: 30px;
+        }
+        
+        .info-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #ffd93d;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(90deg, #ffd93d, transparent);
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .info-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #4ecdc4;
+        }
+        
+        .info-label {
+            font-weight: 600;
+            color: #4ecdc4;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .info-value {
+            font-size: 1.1rem;
+            font-weight: 500;
+            word-break: break-all;
+        }
+        
+        .copy-btn {
+            background: rgba(78, 205, 196, 0.2);
+            border: 1px solid #4ecdc4;
+            color: #4ecdc4;
+            padding: 5px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 10px;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: #4ecdc4;
+            color: #16213e;
+        }
+        
+        .status-btn {
+            background: rgba(255, 217, 61, 0.2);
+            border: 1px solid #ffd93d;
+            color: #ffd93d;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            margin-top: 15px;
+        }
+        
+        .status-btn:hover {
+            background: #ffd93d;
+            color: #16213e;
+        }
+        
+        .status-container {
+            margin-top: 20px;
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            display: none;
+        }
+        
+        .status-image {
+            max-width: 100%;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        
+        .link-card {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .link-card.qq {
+            background: linear-gradient(135deg, #12b7f5, #2d8cf0);
+        }
+        
+        .link-card.website {
+            background: linear-gradient(135deg, #4ecdc4, #6de0d6);
+        }
+        
+        .link-card.tutorial {
+            background: linear-gradient(135deg, #45b7d1, #67c7e0);
+        }
+        
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .link-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .link-text {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        
+        .link-desc {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-top: 5px;
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: #888;
+            font-size: 0.9rem;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            background: rgba(78, 205, 196, 0.2);
+            border: 1px solid #4ecdc4;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+        
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: #4ecdc4;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        
+        @media (max-width: 768px) {
+            .title {
+                font-size: 2.5rem;
+            }
+            
+            .subtitle {
+                font-size: 1.2rem;
+            }
+            
+            .server-info {
+                padding: 20px;
+            }
+            
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 class="title">神秘服务器</h1>
+            <div class="subtitle">无白名单 · 离线/正版可进 · 无政府 · 无规则</div>
+            <div class="tagline">浴火重生 · 全新启程 | 可传送·可设家·可复制物品</div>
+            <div class="status-badge">
+                <div class="pulse-dot"></div>
+                <span>服务器在线 · 欢迎加入</span>
+            </div>
+        </div>
+        
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">🌍</div>
+                <div class="feature-title">无白名单限制</div>
+                <div class="feature-desc">离线/正版账号均可进入，随时加入冒险，无需繁琐审核</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <div class="feature-title">无政府模式</div>
+                <div class="feature-desc">完全自由的游戏环境，创造属于你的规则和文明</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <div class="feature-title">无规则束缚</div>
+                <div class="feature-desc">真正的自由沙盒，体验最纯粹的 Minecraft 乐趣</div>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🚀</div>
+                <div class="feature-title">便捷功能全开</div>
+                <div class="feature-desc">支持 tpa 传送，sethome 设置家，home 传送家，所有物品可复制，还有随机出生点，畅玩无阻碍</div>
+            </div>
+        </div>
+        
+        <div class="server-info">
+            <div class="info-section">
+                <div class="info-title">📋 服务器配置</div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">游戏版本</div>
+                        <div class="info-value">Java Edition 1.7~1.21.10</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">服务器核心</div>
+                        <div class="info-value">Paper 1.21.1</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">运行状态</div>
+                        <div class="info-value">
+                            <span style="color: #4ecdc4;">● 24/7 稳定运行</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-section">
+                <div class="info-title">🔗 通用连接地址</div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">服务器地址 (全球通用)</div>
+                        <div class="info-value">
+                            smmc.xiaoyuan7021.top
+                            <button class="copy-btn" onclick="copyText('smmc.xiaoyuan7021.top')">复制</button>
+                        </div>
+                        <button class="status-btn" onclick="showServerStatus()">点击查询服务器实时状态</button>
+                        <div class="status-container" id="statusContainer">
+                            <img src="https://api.azsu.top/mcping/image?ip=smmc.xiaoyuan7021.top&watermark=%C2%A7c%E7%A5%9E%E7%A7%98%E6%9C%8D%E5%8A%A1%E5%99%A8%C2%A77%EF%BD%9C%C2%A7e%E7%8E%A9%E5%AE%B6%E8%81%9A%E9%9B%86%E5%9C%B0:%C2%A76970474171%C2%A77%EF%BD%9C%C2%A7b%E8%85%90%E7%AB%B9:Xiaoyuan7021%C2%A73(_Xiaoyuan_)%EF%BD%9C%C2%A72%20%E6%AC%A2%E8%BF%8E%C2%A7a%E6%B8%B8%E7%8E%A9%C2%A7f%E6%9C%AC%E6%9C%8D!" 
+                                 alt="服务器状态查询" class="status-image">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="info-section">
+                <div class="info-title">💬 社区与支持</div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">官方QQ群</div>
+                        <div class="info-value">
+                            970474171 · 神秘服务器官方群
+                            <button class="copy-btn" onclick="copyText('970474171')">复制群号</button>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">官方网站</div>
+                        <div class="info-value">
+                            ws.xy7021.icu
+                            <button class="copy-btn" onclick="copyText('ws.xy7021.icu')">复制</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="links">
+            <a href="https://qun.qq.com/universal-share/share?ac=1&authKey=z8eIlEiq%2FmF0iM%2FMc6hqqouxwNdy%2FXnnU09bjV6%2B3BZ46nq7kyFxBH6dYTqqNN%2Fg&busi_data=eyJncm91cENvZGUiOiI5NzA0NzQxNzEiLCJ0b2tlbiI6IkoxT3JmRWZ5L0NPRWJhMnFLTnllUUZoaFJaOGI2engyT3NyNGZOaUdlMnRhK3QzVUxzY25QckpMbllrRmNmVmIiLCJ1aW4iOiIzNjg5MDEzNjM2In0%3D&data=fZ_cd92x8zNrAQso8pQ-sVoc9uDKuNtgM-1ja3y4pXBiRaEEvvEKgl6oVl6T96PJNABTLggfMyYiKOoWDJKvsw&svctype=4&tempid=h5_group_info" 
+               class="link-card qq" target="_blank">
+                <div class="link-icon">👥</div>
+                <div class="link-text">加入官方QQ群</div>
+                <div class="link-desc">970474171</div>
+            </a>
+            <a href="index.html" class="link-card website" target="_blank">
+                <div class="link-icon">🌐</div>
+                <div class="link-text">访问官方网站</div>
+                <div class="link-desc">获取最新资讯</div>
+            </a>
+            <a href="javascript:void(0)" class="link-card tutorial" onclick="showConnectHelp()">
+                <div class="link-icon">🎮</div>
+                <div class="link-text">连接教程</div>
+                <div class="link-desc">新手必看</div>
+            </a>
+        </div>
+        
+        <div class="footer">
+            <p>© 2025 神秘服务器 - 用心创造每一份快乐</p>
+        </div>
+    </div>
+    <script>
+        function copyText(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                alert('已复制到剪贴板: ' + text);
+            }).catch(err => {
+                // 降级方案
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                alert('已复制到剪贴板: ' + text);
+            });
+        }
+        
+        function showConnectHelp() {
+            alert('🎮 Minecraft 服务器连接教程：\n\n1. 打开 Minecraft Java Edition 1.21.1\n2. 点击"多人游戏"\n3. 点击"添加服务器"\n4. 在服务器地址中输入：\n   smmc.xiaoyuan7021.top\n5. 点击"完成"即可连接！\n\n💡 提示：支持 tpa 传送、home 设家、物品复制功能，全球通用线路无需切换');
+        }
+        
+        function showServerStatus() {
+            const statusContainer = document.getElementById('statusContainer');
+            statusContainer.style.display = statusContainer.style.display === 'block' ? 'none' : 'block';
+        }
+        
+        // 页面加载动画
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.feature-card, .info-item, .link-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+</body>
+</html>
